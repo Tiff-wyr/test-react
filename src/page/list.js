@@ -7,13 +7,13 @@ class List extends Component {
             text: this.props.text
         }
     }
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     console.log("子组件getDerivedState阶段")
-    //     return null
-    // }
-    UNSAFE_componentWillReceiveProps() {
-        console.log('list子组件的willReceiveProps')
+    static getDerivedStateFromProps(nextProps, prevState) {
+        console.log("list子组件getDerivedState阶段")
+        return null
     }
+    // UNSAFE_componentWillReceiveProps() {
+    //     console.log('list子组件的willReceiveProps')
+    // }
     render() {
         const {text} = this.props
         return (<div>

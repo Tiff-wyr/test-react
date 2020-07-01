@@ -14,10 +14,10 @@ class App extends Component {
       text: '数据'
     }
   }
-  static getDerivedStateFromProps(nextProps, prevState) {
-    console.log("父组件getDerivedState阶段")
-    return null
-  }
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   console.log("父组件getDerivedState阶段")
+  //   return null
+  // }
   shouldComponentUpdate() {
     console.log("app should update")
     return true
@@ -42,6 +42,9 @@ class App extends Component {
     this.setState({
       num: this.state.num,
       countKey: this.state.countKey
+    })
+    this.setState({
+      list: [1]
     })
   }
   componentDidMount() {
