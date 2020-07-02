@@ -43,6 +43,5 @@ react.StrictMode 严格模式会通过两次调用constructor和render函数来�
 . 类组建的静态方法getDerivedStateFromProps  
 . 函数组件方法体  
 . 状态更新函数(setState的第一个参数)  
-. 传入useState,useMemo或useReducer的函数
 
 https://m.html.cn/qa/react/14367.html
