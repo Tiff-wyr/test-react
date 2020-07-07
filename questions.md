@@ -20,6 +20,7 @@ react 生命周期分为三部分
 该函数返回布尔值，当返回 false 时将阻止render，返回 true 时正常执行。函数有两个参数 nextProps（新的props）和 nextState（新的 state）
 . render  
 . getSnapshotBeforeUpdate  
+该函数的返回值会被作为 componentDidUpdate 的第三个参数被传入
 . componentDidUpdate  
 
 3、Unmounting（卸载）阶段  
