@@ -1,3 +1,7 @@
+.text {
+    display: inline-block;
+    width: 150px;
+}
 .finish {
     text-decoration: line-through;
     color: #ddd;

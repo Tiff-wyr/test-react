@@ -122,13 +122,26 @@ class App extends Component {
       showArr
     })
   }
+  editItemText(n, v) {
+    let arr = this.state.arr, index = this.getArrIndex(n)
+    arr[index].text = v || arr[index].text
+    console.log(v)
+    this.setState({
+      arr
+    })
+  }
   render() {
     console.log("父组件的render")
     return (
-      <div>
-        <input value={this.state.text} onChange={(e) => { this.inputHandle(e) }} onKeyDown={(e) => { this.keyDownHandle(e) }} placeholder="请输入任务" onBlur={(e) => { this.addList(e) }} />
+      <div className="app">
+        <input style={{ width: '190px'}}value={this.state.text} onChange={(e) => { this.inputHandle(e) }} onKeyDown={(e) => { this.keyDownHandle(e) }} placeholder="请输入任务" onBlur={(e) => { this.addList(e) }} />
         <div>
-          {this.state.showArr.length > 0 ? this.state.showArr.map((item, index) => <ListItem key={item.id} index={item.id} pdata={item} delList={(n) => () => { this.delList(n) }} recoverItem={(n) => () => { this.recoverItem(n)}} checkBox={(n) => () => { this.checkBox(n) }}></ListItem>)
+          {this.state.showArr.length > 0 ? this.state.showArr.map((item, index) => <ListItem key={item.id} 
+          index={item.id} pdata={item} 
+          delList={(n) => () => { this.delList(n) }} 
+          recoverItem={(n) => () => { this.recoverItem(n)}} 
+          editItemText={(n,v)  => { this.editItemText(n, v) }}
+          checkBox={(n) => () => { this.checkBox(n) }}></ListItem>)
         : (<span>暂无数据...</span>)}
         </div>
         <button onClick={() => { this.switchShowArr('all')}}>all</button>
