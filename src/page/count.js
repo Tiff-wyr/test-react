@@ -1,22 +1,16 @@
 import React, { Component } from 'react'
+import { connect } from "react-redux"
+import { addCount, minusCount } from '../action'
+
+
 
 class Count extends Component {
     constructor(props) {
         console.log("初始化count")
         super(props)
-        this.state = {
-            num: this.props.num,
-            text: this.props.text + '是：'
-        }
     }
     UNSAFE_componentWillReceiveProps(nextProps) {
         console.log('count 的 willReceived', nextProps === this.props)
-        if (nextProps.num !== this.props.num) {
-            console.log("ReceiveProps获取到了新的props", nextProps, this.props)
-            // this.setState({
-            //     num: nextProps.num
-            // })
-        }
     }
     // static getDerivedStateFromProps(nextProps) {
     //     console.log("count组件的derived")
@@ -37,11 +31,35 @@ class Count extends Component {
     }
     render(){
         console.log("count组件的render")
-        const { num } = this.props
+        const { num, onIncrement, onDecrement } = this.props;
         return (
-            <div>{this.state.text}{num}</div>
-        )
+          <div>
+            <button onClick={onDecrement}>-</button>
+            <span>{num}</span>
+            <button onClick={onIncrement}>+</button>
+          </div>
+        );
     }
 }
 
-export default Count
+const mapStateToProps = state => {
+    return {
+        num: state.count
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onIncrement: () => {
+            dispatch(addCount())
+        },
+        onDecrement: () => {
+            dispatch(minusCount())
+        }
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Count)

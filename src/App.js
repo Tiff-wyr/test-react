@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
 import './App.css';
 import ListItem from './page/ListItem'
-// import Count from './page/count'
+import Count from './page/Count';
+import List from "./page/List"
+
+import store from "./store"
+console.log(store.getState())
 
 class App extends Component {
   constructor(props) {
@@ -134,6 +138,10 @@ class App extends Component {
     console.log("父组件的render")
     return (
       <div className="app">
+        <p>使用redux</p>
+        <Count></Count>
+        <List></List>
+        <p>没用redux</p>
         <input style={{ width: '190px'}}value={this.state.text} onChange={(e) => { this.inputHandle(e) }} onKeyDown={(e) => { this.keyDownHandle(e) }} placeholder="请输入任务" onBlur={(e) => { this.addList(e) }} />
         <div>
           {this.state.showArr.length > 0 ? this.state.showArr.map((item, index) => <ListItem key={item.id} 
