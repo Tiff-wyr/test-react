@@ -54,7 +54,7 @@ class ListItem extends Component {
       <div>
         <input
           type="checkbox"
-          onChange={checkBox(index)}
+          onChange={() => {checkBox(index);}}
           defaultChecked={pdata.checked}
         ></input>
         <span
@@ -83,10 +83,10 @@ class ListItem extends Component {
         ></input>
         {pdata.del ? (
             // fixme
-          <button onClick={recoverItem(index)}>recover</button>
+          <button onClick={() => {recoverItem(index)}}>recover</button>
         ) : (
             // fixme 
-          <button onClick={delList(index)}>del</button>
+          <button onClick={() => {delList(index)}}>del</button>
         )}
       </div>
     );

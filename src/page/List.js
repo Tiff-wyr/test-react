@@ -20,10 +20,10 @@ class List extends Component {
                     {todo.length > 0 ? todo.map((item) => 
                     <ListItem key={item.id}
                         index={item.id} pdata={item}
-                        delList={() => () => { delTodo(item.id)}}
-                        recoverItem={(n) => () => { delTodo(item.id) }}
+                        delList={() => { delTodo(item.id)}}
+                        recoverItem={(n) => { delTodo(item.id) }}
                         editItemText={(n,text) => { editTodo(item.id, text)}}
-                        checkBox={(n) => () => { toggleItem(item.id) }}
+                        checkBox={(n) => { toggleItem(item.id) }}
                         ></ListItem>)
                         : (<span>暂无数据...</span>)}
                 </div>

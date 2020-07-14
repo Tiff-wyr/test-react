@@ -173,16 +173,16 @@ class App extends Component {
                 key={item.id}
                 index={item.id}
                 pdata={item}
-                delList={(n) => () => {
+                delList={(n) => {
                   this.delList(n);
                 }}
-                recoverItem={(n) => () => {
+                recoverItem={(n) => {
                   this.recoverItem(n);
                 }}
                 editItemText={(n, v) => {
                   this.editItemText(n, v);
                 }}
-                checkBox={(n) => () => {
+                checkBox={(n) => {
                   this.checkBox(n);
                 }}
               ></ListItem>
