@@ -1,13 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import "../static/css/listItem.css";
 
-class ListItem extends Component {
+class ListItem extends PureComponent {
   constructor(props) {
     super(props);
-    console.log("ListItem组件的初始化", props.pdata.text);
+    console.log("ListItem组件的初始化", props.text);
     this.state = {
       edit: false,
-      text: props.pdata.text,
+      text: props.text,
     };
     this.inputRef = React.createRef();
   }
@@ -41,30 +41,45 @@ class ListItem extends Component {
       text: e.target.value,
     });
   }
+//   shouldComponentUpdate(oldProps, state) {
+//     console.log(state);
+//     if (
+//       oldProps.pdata.text !== this.props.pdata.text ||
+//       state.edit !== this.state.edit ||
+//       state.text !== this.state.text
+//     ) {
+//       return true;
+//     }
+//     return false;
+//   }
   componentDidUpdate(oldProps) {
-    if (oldProps.pdata.text !== this.props.pdata.text) {
+      console.log("item的update")
+    if (oldProps.text !== this.props.text) {
       this.setState({
-        text: this.props.pdata.text,
+        text: this.props.text,
       });
     }
   }
   render() {
-    const { pdata, checkBox, delList, index, recoverItem } = this.props;
+    console.log("item的render");
+    const { del,checked, text, checkBox, delList, index, recoverItem } = this.props;
     return (
       <div>
         <input
           type="checkbox"
-          onChange={() => {checkBox(index);}}
-          defaultChecked={pdata.checked}
+          onChange={() => {
+            checkBox(index);
+          }}
+          defaultChecked={checked}
         ></input>
         <span
           style={{ display: !this.state.edit ? "inline-block" : "none" }}
           onClick={() => {
-            this.editItem(pdata.checked);
+            this.editItem(checked);
           }}
-          className={pdata.checked ? "text finish" : "text"}
+          className={checked ? "text finish" : "text"}
         >
-          {pdata.text}
+          {text}
         </span>
         <input
           onBlur={(e) => {
@@ -81,12 +96,24 @@ class ListItem extends Component {
           type="text"
           value={this.state.text}
         ></input>
-        {pdata.del ? (
-            // fixme
-          <button onClick={() => {recoverItem(index)}}>recover</button>
+        {del ? (
+          // fixme
+          <button
+            onClick={() => {
+              recoverItem(index);
+            }}
+          >
+            recover
+          </button>
         ) : (
-            // fixme 
-          <button onClick={() => {delList(index)}}>del</button>
+          // fixme
+          <button
+            onClick={() => {
+              delList(index);
+            }}
+          >
+            del
+          </button>
         )}
       </div>
     );

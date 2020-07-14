@@ -110,14 +110,10 @@ class App extends Component {
     });
   }
   getArrIndex(id) {
-    let index = -1;
-    // foreach fixme
-    this.state.arr.forEach((item, v) => {
-      if (item.id === id) {
-        index = v;
-      }
+    // fix me
+    return this.state.arr.findIndex((item, v) => {
+      return item.id === id;
     });
-    return index;
   }
   switchShowArr(type) {
     let showArr = [];
@@ -170,6 +166,9 @@ class App extends Component {
           {this.state.showArr.length > 0 ? (
             this.state.showArr.map((item, index) => (
               <ListItem
+                checked={item.checked}
+                del={item.del}
+                text={item.text}
                 key={item.id}
                 index={item.id}
                 pdata={item}

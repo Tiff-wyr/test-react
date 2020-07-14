@@ -19,7 +19,10 @@ class List extends Component {
                 <div>
                     {todo.length > 0 ? todo.map((item) => 
                     <ListItem key={item.id}
-                        index={item.id} pdata={item}
+                        index={item.id}
+                        checked={item.checked}
+                        del={item.del}
+                        text={item.text}
                         delList={() => { delTodo(item.id)}}
                         recoverItem={(n) => { delTodo(item.id) }}
                         editItemText={(n,text) => { editTodo(item.id, text)}}
