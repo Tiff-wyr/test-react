@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import ListItem from "./page/ListItem";
 import Count from "./page/Count";
+import HookCount from "./page/HookCount";
 import List from "./page/List";
 
 import store from "./store";
@@ -12,7 +13,7 @@ class App extends Component {
     super(props);
     console.log("初始化app");
     this.state = {
-      arr: [
+      showArr: [
         {
           id: "1",
           checked: true,
@@ -38,14 +39,13 @@ class App extends Component {
           del: false,
         },
       ],
-      showArr: [],
       text: "",
       status: "all",
     };
   }
-  componentDidMount() {
-    this.switchShowArr(this.state.status);
-  }
+  // componentDidMount() {
+  //   this.switchShowArr(this.state.status);
+  // }
   inputHandle(e) {
     this.setState({
       text: e.target.value,
@@ -64,86 +64,77 @@ class App extends Component {
       text,
       id: new Date().getTime(),
     };
-    let arr = [...this.state.arr, obj];
-    let showArr =
-      this.state.status === "all" || this.state.status === "unfinished"
-        ? [...this.state.showArr, obj]
-        : this.state.showArr;
+    let showArr = [...this.state.showArr, obj];
     this.setState({
-      arr,
       text: "",
       showArr,
     });
   }
   delList(id) {
-    let arr = this.state.arr,
+    let showArr = this.state.showArr,
       index = this.getArrIndex(id);
-    arr[index].del = true;
+    showArr[index].del = true;
     this.setState(
       {
-        arr,
-      },
-      () => {
-        this.switchShowArr(this.state.status);
+        showArr,
       }
     );
   }
   recoverItem(id) {
-    let arr = this.state.arr,
+    let showArr = this.state.showArr,
       index = this.getArrIndex(id);
-    arr[index].del = false;
+    showArr[index].del = false;
     this.setState(
       {
-        arr,
-      },
-      () => {
-        this.switchShowArr(this.state.status);
+        showArr,
       }
     );
   }
   checkBox(id) {
-    let arr = this.state.arr,
+    let showArr = this.state.showArr,
       index = this.getArrIndex(id);
-    arr[index].checked = !arr[index].checked;
+    showArr[index].checked = !showArr[index].checked;
     this.setState({
-      arr,
+      showArr,
     });
   }
   getArrIndex(id) {
     // fix me
-    return this.state.arr.findIndex((item, v) => {
+    return this.state.showArr.findIndex((item, v) => {
       return item.id === id;
     });
   }
   switchShowArr(type) {
-    let showArr = [];
-    if (type === "all") {
-      showArr = this.state.arr.filter((item) => !item.del);
-    } else if (type === "finished") {
-      showArr = this.state.arr.filter((item) => item.checked && !item.del);
-    } else if (type === "unfinished") {
-      showArr = this.state.arr.filter((item) => !item.checked && !item.del);
-    } else if (type === "del") {
-      showArr = this.state.arr.filter((item) => item.del);
-    }
     this.setState({
-      status: type,
-      showArr,
+      status: type
     });
   }
-  editItemText(n, v) {
-    let arr = this.state.arr,
+  filterShowArr(type) {
+    switch (type) {
+      case "finished":
+        return this.state.showArr.filter((item) => item.checked && !item.del);
+      case "unfinished":
+        return this.state.showArr.filter((item) => !item.checked && !item.del);
+      case "del":
+        return this.state.showArr.filter((item) => item.del);
+      case "all":
+      default:
+        return this.state.showArr.filter((item) => !item.del);
+    }
+  }
+  editItemText(n, text) {
+    let showArr = this.state.showArr,
       index = this.getArrIndex(n);
-    arr[index].text = v || arr[index].text;
-    console.log(v);
+    showArr[index].text = text;
     this.setState({
-      arr,
+      showArr,
     });
   }
   render() {
     console.log("父组件的render");
     return (
       <div className="app">
+        <HookCount/>
         <p>使用redux</p>
         <Count />
         <List />
@@ -163,15 +154,14 @@ class App extends Component {
           }}
         />
         <div>
-          {this.state.showArr.length > 0 ? (
-            this.state.showArr.map((item, index) => (
+          {this.filterShowArr(this.state.status).length > 0 ? (
+            this.filterShowArr(this.state.status).map((item, index) => (
               <ListItem
                 checked={item.checked}
                 del={item.del}
                 text={item.text}
                 key={item.id}
                 index={item.id}
-                pdata={item}
                 delList={(n) => {
                   this.delList(n);
                 }}

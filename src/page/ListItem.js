@@ -1,15 +1,15 @@
 import React, { Component, PureComponent } from "react";
 import "../static/css/listItem.css";
 
-class ListItem extends PureComponent {
+class ListItem extends Component {
   constructor(props) {
     super(props);
     console.log("ListItem组件的初始化", props.text);
     this.state = {
       edit: false,
-      text: props.text,
+      // text: props.text,
     };
-    this.inputRef = React.createRef();
+    // this.inputRef = React.createRef();
   }
   editItem(checked) {
     if (checked) {
@@ -19,14 +19,10 @@ class ListItem extends PureComponent {
     this.setState(
       {
         edit: true,
-      },
-      () => {
-        this.inputRef.current.focus();
       }
     );
   }
   editItemText(e) {
-    this.props.editItemText(this.props.index, this.state.text);
     this.setState({
       edit: false,
     });
@@ -36,24 +32,21 @@ class ListItem extends PureComponent {
       this.editItemText(e);
     }
   }
-  handleInputChange(e) {
-    this.setState({
-      text: e.target.value,
-    });
+  shouldComponentUpdate(nextProps, state) {
+    console.log(nextProps);
+    console.log(nextProps.delList === this.props.delList);
+    if (
+      nextProps.text !== this.props.text ||
+      nextProps.checked !== this.props.checked ||
+      state.edit !== this.state.edit ||
+      state.text !== this.state.text
+    ) {
+      return true;
+    }
+    return false;
   }
-//   shouldComponentUpdate(oldProps, state) {
-//     console.log(state);
-//     if (
-//       oldProps.pdata.text !== this.props.pdata.text ||
-//       state.edit !== this.state.edit ||
-//       state.text !== this.state.text
-//     ) {
-//       return true;
-//     }
-//     return false;
-//   }
   componentDidUpdate(oldProps) {
-      console.log("item的update")
+    console.log("item的update")
     if (oldProps.text !== this.props.text) {
       this.setState({
         text: this.props.text,
@@ -61,8 +54,8 @@ class ListItem extends PureComponent {
     }
   }
   render() {
-    console.log("item的render");
-    const { del,checked, text, checkBox, delList, index, recoverItem } = this.props;
+    console.log("item的render", this.state.text);
+    const { del,checked, text, checkBox, delList, index, recoverItem, editItemText } = this.props;
     return (
       <div>
         <input
@@ -72,7 +65,7 @@ class ListItem extends PureComponent {
           }}
           defaultChecked={checked}
         ></input>
-        <span
+        {/* <span
           style={{ display: !this.state.edit ? "inline-block" : "none" }}
           onClick={() => {
             this.editItem(checked);
@@ -80,21 +73,27 @@ class ListItem extends PureComponent {
           className={checked ? "text finish" : "text"}
         >
           {text}
-        </span>
+        </span> */}
         <input
+          className={`text ${checked ? "finish" : ""} ${
+            this.state.edit ? "edit" : ""
+          }`}
+          readOnly={checked}
           onBlur={(e) => {
             this.editItemText(e);
+          }}
+          onClick={() => {
+            this.editItem(checked);
           }}
           onKeyDown={(e) => {
             this.handleKeyEnter(e);
           }}
           ref={this.inputRef}
           onChange={(e) => {
-            this.handleInputChange(e);
+            editItemText(index, e.target.value);
           }}
-          style={{ display: this.state.edit ? "inline-block" : "none" }}
           type="text"
-          value={this.state.text}
+          value={text}
         ></input>
         {del ? (
           // fixme
