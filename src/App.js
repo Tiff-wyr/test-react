@@ -3,7 +3,7 @@ import "./App.css";
 import ListItem from "./page/ListItem";
 import Count from "./page/Count";
 import HookCount from "./page/HookCount";
-import List from "./page/List";
+// import List from "./page/List";
 
 import store from "./store";
 console.log(store.getState());
@@ -137,7 +137,7 @@ class App extends Component {
         <HookCount/>
         <p>使用redux</p>
         <Count />
-        <List />
+        {/* <List /> */}
         <p>没用redux</p>
         <input
           style={{ width: "190px" }}

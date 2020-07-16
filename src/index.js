@@ -5,10 +5,11 @@ import './index.css';
 import store from "./store"
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import RouterContain from './RouterContain';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <RouterContain />
   </Provider>,
   document.getElementById('root')
 );

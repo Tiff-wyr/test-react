@@ -1,4 +1,5 @@
 import React, { Component, PureComponent } from "react";
+import {is} from "immutable";
 import "../static/css/listItem.css";
 
 class ListItem extends Component {
@@ -32,19 +33,26 @@ class ListItem extends Component {
       this.editItemText(e);
     }
   }
-  shouldComponentUpdate(nextProps, state) {
-    console.log(nextProps);
-    console.log(nextProps.delList === this.props.delList);
-    if (
-      nextProps.text !== this.props.text ||
-      nextProps.checked !== this.props.checked ||
-      state.edit !== this.state.edit ||
-      state.text !== this.state.text
-    ) {
-      return true;
-    }
-    return false;
+  static getDerivedStateFromProps(nextProps) {
+    return null
   }
+  // shouldComponentUpdate(nextProps, state) {
+  //   // if (
+  //   //   nextProps.text !== this.props.text ||
+  //   //   nextProps.checked !== this.props.checked ||
+  //   //   state.edit !== this.state.edit ||
+  //   //   state.text !== this.state.text
+  //   // ) {
+  //   //   return true;
+  //   // }
+  //   // return false;
+  //   // for (const key in nextProps) {
+  //   //   if (!is(nextProps[key], this.props[key])) {
+  //   //     return true
+  //   //   }
+  //   // }
+  //   // return false
+  // }
   componentDidUpdate(oldProps) {
     console.log("item的update")
     if (oldProps.text !== this.props.text) {
