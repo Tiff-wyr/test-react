@@ -10,7 +10,7 @@ class ListItem extends Component {
       edit: false,
       // text: props.text,
     };
-    // this.inputRef = React.createRef();
+    this.inputRef = React.createRef();
   }
   editItem(checked) {
     if (checked) {
@@ -27,32 +27,33 @@ class ListItem extends Component {
     this.setState({
       edit: false,
     });
+    this.inputRef.current.blur()
   }
   handleKeyEnter(e) {
     if (e.keyCode === 13) {
       this.editItemText(e);
     }
   }
-  static getDerivedStateFromProps(nextProps) {
-    return null
-  }
-  // shouldComponentUpdate(nextProps, state) {
-  //   // if (
-  //   //   nextProps.text !== this.props.text ||
-  //   //   nextProps.checked !== this.props.checked ||
-  //   //   state.edit !== this.state.edit ||
-  //   //   state.text !== this.state.text
-  //   // ) {
-  //   //   return true;
-  //   // }
-  //   // return false;
-  //   // for (const key in nextProps) {
-  //   //   if (!is(nextProps[key], this.props[key])) {
-  //   //     return true
-  //   //   }
-  //   // }
-  //   // return false
+  // static getDerivedStateFromProps(nextProps) {
+  //   return null
   // }
+  shouldComponentUpdate(nextProps, state) {
+    if (
+      nextProps.text !== this.props.text ||
+      nextProps.checked !== this.props.checked ||
+      state.edit !== this.state.edit ||
+      state.text !== this.state.text
+    ) {
+      return true;
+    }
+    // return false;
+    // for (const key in nextProps) {
+    //   if (!is(nextProps[key], this.props[key])) {
+    //     return true
+    //   }
+    // }
+    // return false
+  }
   componentDidUpdate(oldProps) {
     console.log("item的update")
     if (oldProps.text !== this.props.text) {

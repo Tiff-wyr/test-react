@@ -5,13 +5,13 @@ import { Switch } from "react-router-dom";
 import "./AnimatedSwitch.css"
 
 function AnimatedSwitch(props) {
-  console.log("location", props.location);
+  console.log("location", props);
   return (
     <TransitionGroup>
       <CSSTransition
-        key={"animate"}
+        key={props.location.key}
         classNames={props.type || "fade"}
-        timeout={props.duration || 1000}
+        timeout={props.duration || 500}
       >
         <Switch location={props.location}>{props.children}</Switch>
       </CSSTransition>
