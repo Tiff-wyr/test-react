@@ -132,6 +132,7 @@ class App extends Component {
   }
   render() {
     console.log("父组件的render");
+    console.log("app", this.props)
     return (
       <div className="app">
         <HookCount/>

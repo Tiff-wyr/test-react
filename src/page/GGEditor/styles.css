@@ -1,0 +1,10 @@
+.editor {
+  height: 100vh;
+  display: flex;
+  flex: 1;
+  background-color: #f4f6f8;
+}
+
+.editorBd {
+  flex: 1;
+}

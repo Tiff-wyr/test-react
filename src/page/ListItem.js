@@ -1,5 +1,4 @@
-import React, { Component, PureComponent } from "react";
-import {is} from "immutable";
+import React, { Component } from "react";
 import "../static/css/listItem.css";
 
 class ListItem extends Component {
@@ -17,17 +16,15 @@ class ListItem extends Component {
       alert("已经完成的不能修改啊");
       return;
     }
-    this.setState(
-      {
-        edit: true,
-      }
-    );
+    this.setState({
+      edit: true,
+    });
   }
   editItemText(e) {
     this.setState({
       edit: false,
     });
-    this.inputRef.current.blur()
+    this.inputRef.current.blur();
   }
   handleKeyEnter(e) {
     if (e.keyCode === 13) {
@@ -55,7 +52,7 @@ class ListItem extends Component {
     // return false
   }
   componentDidUpdate(oldProps) {
-    console.log("item的update")
+    console.log("item的update");
     if (oldProps.text !== this.props.text) {
       this.setState({
         text: this.props.text,
@@ -64,7 +61,16 @@ class ListItem extends Component {
   }
   render() {
     console.log("item的render", this.state.text);
-    const { del,checked, text, checkBox, delList, index, recoverItem, editItemText } = this.props;
+    const {
+      del,
+      checked,
+      text,
+      checkBox,
+      delList,
+      index,
+      recoverItem,
+      editItemText,
+    } = this.props;
     return (
       <div>
         <input
