@@ -1,34 +1,43 @@
 import React from "react";
-import GGEditor, { Flow, RegisterNode, setAnchorPointsState } from "gg-editor";
+import GGEditor, {
+  Flow,
+  RegisterNode,
+  setAnchorPointsState,
+  ItemPopover,
+} from "gg-editor";
+import { Popover } from "antd";
 import "./index.css";
 
-const data = {
-  nodes: [
-    {
-      id: "0",
-      label: "Node",
-      x: 50,
-      y: 50,
-    },
-    {
-      id: "1",
-      label: "Node",
-      x: 50,
-      y: 200,
-    },
-  ],
-  edges: [
-    {
-      label: "Label",
-      source: "0",
-      sourceAnchor: 1,
-      target: "1",
-      targetAnchor: 0,
-    },
-  ],
-};
-
 function GGEditorWrap() {
+  const data = {
+    nodes: [
+      {
+        id: "0",
+        label: "Node",
+        x: 50,
+        y: 50,
+        type: "customStartNode",
+      },
+      {
+        id: "1",
+        label: "Node",
+        x: 50,
+        y: 200,
+        type: "customNode",
+        img: "./logo192.png",
+      },
+    ],
+    edges: [
+      {
+        // label: "Label",
+        source: "0",
+        // sourceAnchor: 1,
+        target: "1",
+        // targetAnchor: 0,
+      },
+    ],
+  };
+
   return (
     <GGEditor
       style={{
@@ -38,22 +47,72 @@ function GGEditorWrap() {
       <Flow
         className={"graph"}
         data={data}
-        graphConfig={{ defaultNode: { type: "customNode" } }}
+        // graphConfig={{ defaultNode: { type: "customStartNode" } }}
         // graphConfig={{ defaultNode: { type: 'customStartNode' } }}
         // graphConfig={{ defaultNode: { type: 'customInternalNode', size: 50 } }}
+      />
+      <ItemPopover
+        renderContent={(item, position) => {
+          const { minY: top, centerX: left } = position;
+          const content = <div>{item._cfg.model.label}</div>;
+          return (
+            <Popover
+              visible={true}
+              title="Title"
+              arrowPointAtCenter
+              content={content}
+            >
+              <div style={{ position: "absolute", top, left }} />
+            </Popover>
+          );
+        }}
       />
       <RegisterNode
         name="customNode"
         config={{
+          draw(model, group) {
+            const keyShape = group.addShape("rect", {
+              draggable: true,
+              attrs: {
+                x: 0,
+                y: 0,
+                width: 40,
+                height: 40,
+                fill: "#fff",
+                radius: 4,
+              },
+            });
+            group.addShape("image", {
+              draggable: true,
+              attrs: {
+                x: 2,
+                y: 2,
+                width: 40,
+                height: 40,
+                img: model.img,
+              },
+            });
+            return keyShape;
+          },
           getCustomConfig(model) {
+            console.log(model);
             return {
+              size: [40, 40],
               wrapperStyle: {
-                fill: "#000000",
+                fill: "#FFF",
               },
             };
           },
+          getAnchorPoints() {
+            return [
+              [0.5, 0],
+              [0.5, 1],
+              [0, 0.5],
+              [1, 0.5],
+            ];
+          },
         }}
-        extend="bizFlowNode"
+        extend="single-shape"
       />
       <RegisterNode
         name="customStartNode"
@@ -75,6 +134,7 @@ function GGEditorWrap() {
           getAnchorPoints() {
             return [
               [0.5, 0],
+              [0.5, 0.5],
               [0.5, 1],
               [0, 0.5],
               [1, 0.5],
@@ -123,7 +183,7 @@ function GGEditorWrap() {
             ];
           },
         }}
-        extend="circle"
+        extend="rect"
       />
     </GGEditor>
   );
