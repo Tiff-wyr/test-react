@@ -1,10 +1,7 @@
-import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { addCount, minusCount } from '../action'
 
-
-
-class Count extends Component {
+class Count extends React.Component {
     constructor(props) {
         console.log("初始化count")
         super(props)

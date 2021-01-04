@@ -1,17 +1,18 @@
-import React, { Component } from "react";
 import "./App.css";
 import ListItem from "./page/ListItem";
 import Count from "./page/Count";
 import HookCount from "./page/HookCount";
 // import List from "./page/List";
-
 import store from "./store";
 console.log(store.getState());
+const map = {
+  a: 1
+}
 
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
-    console.log("初始化app");
+    console.log("初始化app", _.get(map, "a"));
     this.state = {
       showArr: [
         {
@@ -74,21 +75,17 @@ class App extends Component {
     let showArr = this.state.showArr,
       index = this.getArrIndex(id);
     showArr[index].del = true;
-    this.setState(
-      {
-        showArr,
-      }
-    );
+    this.setState({
+      showArr,
+    });
   }
   recoverItem(id) {
     let showArr = this.state.showArr,
       index = this.getArrIndex(id);
     showArr[index].del = false;
-    this.setState(
-      {
-        showArr,
-      }
-    );
+    this.setState({
+      showArr,
+    });
   }
   checkBox(id) {
     let showArr = this.state.showArr,
@@ -106,7 +103,7 @@ class App extends Component {
   }
   switchShowArr(type) {
     this.setState({
-      status: type
+      status: type,
     });
   }
   filterShowArr(type) {
@@ -132,10 +129,10 @@ class App extends Component {
   }
   render() {
     console.log("父组件的render");
-    console.log("app", this.props)
+    console.log("app", this.props);
     return (
       <div className="app">
-        <HookCount/>
+        <HookCount />
         <p>使用redux</p>
         <Count />
         {/* <List /> */}

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link, BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import List from "./page/List";
 import Count from "./page/Count";
-import App from "./App";
+import App from "./App.jsx";
 import Parent from "./page/Parent";
 import GGEditor from "./page/GGEditor";
 
