@@ -20,13 +20,19 @@ class Count extends React.Component {
   componentDidUpdate() {
     console.log("count update end");
   }
+    addListener = () => {
+        const { bus } = this.context;
+        bus.addListener(() => {
+            console.log(this.props.num);
+        })
+    };
   render() {
     console.log("count组件的render");
     const { num, onIncrement, onDecrement } = this.props;
     const { bus } = this.context;
     return (
       <div>
-        <div>name: { bus.name }</div>
+        <div onClick={this.addListener}>name: {bus.name}</div>
         <button onClick={onDecrement}>-</button>
         <span>{num}</span>
         <button onClick={onIncrement}>+</button>

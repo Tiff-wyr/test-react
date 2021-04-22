@@ -5,8 +5,15 @@ import Count from "./page/Count";
 import App from "./App.jsx";
 import Parent from "./page/Parent";
 import GGEditor from "./page/GGEditor";
+import MyContext from "./components/context/MyContext";
 
 class RouterContain extends Component {
+  componentDidMount() {
+    const { bus } = this.context;
+    setInterval(() => {
+      bus.emit()
+    }, 1000);
+  }
   render() {
     return (
       <div>
@@ -28,5 +35,7 @@ class RouterContain extends Component {
     );
   }
 }
+
+RouterContain.contextType = MyContext;
 
 export default RouterContain;
