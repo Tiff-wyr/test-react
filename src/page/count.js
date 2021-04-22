@@ -1,44 +1,41 @@
 import React from "react";
 import { connect } from "react-redux"
 import { addCount, minusCount } from '../action'
+import MyContext from "../components/context/MyContext";
 
 class Count extends React.Component {
-    constructor(props) {
-        console.log("初始化count")
-        super(props)
-    }
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        console.log('count 的 willReceived', nextProps === this.props)
-    }
-    // static getDerivedStateFromProps(nextProps) {
-    //     console.log("count组件的derived")
-    //     return null
-    // }
-    // shouldComponentUpdate(nextProps) {
-    //     if (nextProps.num !== this.props.num) {
-    //         console.log("shouldup获取到了新的props", nextProps, this.props)
-    //         return true
-    //     }
-    //     return false
-    // }
-    UNSAFE_componentWillUpdate() {
-        console.log("count组件将要更新")
-    }
-    componentDidUpdate() {
-        console.log("count update end")
-    }
-    render(){
-        console.log("count组件的render")
-        const { num, onIncrement, onDecrement } = this.props;
-        return (
-          <div>
-            <button onClick={onDecrement}>-</button>
-            <span>{num}</span>
-            <button onClick={onIncrement}>+</button>
-          </div>
-        );
-    }
+  constructor(props) {
+    console.log("初始化count");
+    super(props);
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    console.log("count 的 willReceived", nextProps === this.props);
+  }
+  componentDidMount() {
+    console.log("context", this.context);
+  }
+  UNSAFE_componentWillUpdate() {
+    console.log("count组件将要更新");
+  }
+  componentDidUpdate() {
+    console.log("count update end");
+  }
+  render() {
+    console.log("count组件的render");
+    const { num, onIncrement, onDecrement } = this.props;
+    const { bus } = this.context;
+    return (
+      <div>
+        <div>name: { bus.name }</div>
+        <button onClick={onDecrement}>-</button>
+        <span>{num}</span>
+        <button onClick={onIncrement}>+</button>
+      </div>
+    );
+  }
 }
+
+Count.contextType = MyContext;
 
 const mapStateToProps = state => {
     return {
