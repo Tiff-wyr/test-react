@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import ListItem from "./page/ListItem";
 import Count from "./page/Count";
@@ -6,8 +7,8 @@ import HookCount from "./page/HookCount";
 import store from "./store";
 console.log(store.getState());
 const map = {
-  a: 1
-}
+  a: 1,
+};
 
 class App extends React.Component {
   constructor(props) {
