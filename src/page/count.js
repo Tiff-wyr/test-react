@@ -25,7 +25,7 @@ class Count extends React.Component {
         bus.addListener(() => {
             console.log(this.props.num);
         })
-    };
+  };
   render() {
     console.log("count组件的render");
     const { num, onIncrement, onDecrement } = this.props;

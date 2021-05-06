@@ -5,14 +5,15 @@ import Count from "./page/Count";
 import App from "./App.jsx";
 import Parent from "./page/Parent";
 import GGEditor from "./page/GGEditor";
+import Refs from "./page/refs";
 import MyContext from "./components/context/MyContext";
 
 class RouterContain extends Component {
   componentDidMount() {
     const { bus } = this.context;
-    setInterval(() => {
-      bus.emit()
-    }, 1000);
+    // setInterval(() => {
+    //   bus.emit()
+    // }, 1000);
   }
   render() {
     return (
@@ -23,12 +24,14 @@ class RouterContain extends Component {
           <Link to="/count">count </Link>
           <Link to="/parent">parent</Link>
           <Link to="/gg-editor">GGEditor</Link>
+          <Link to="/refs">refs</Link>
           <Switch>
             <Route exact path="/" component={App} />
             <Route exact path="/list" component={List} />
             <Route exact path="/count" component={Count} />
             <Route path="/parent" component={Parent} />
             <Route path="/gg-editor" component={GGEditor} />
+            <Route path="/refs" component={Refs} />
           </Switch>
         </Router>
       </div>
