@@ -49,7 +49,7 @@ class ListItem extends Component {
     //     return true
     //   }
     // }
-    // return false
+    return false
   }
   componentDidUpdate(oldProps) {
     console.log("item的update");
